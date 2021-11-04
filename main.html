@@ -5,5 +5,22 @@
     </head>
     <body>
         <h1>My todos</h1>
+        <ul></ul>
     </body>
+
+    <script>
+        const electron = require('electron');
+        const { ipcRenderer } = electron;
+
+        ipcRenderer.on('todo:add', (event, todo) => {
+            const list = document.createElement('li');
+            const text = document.createTextNode(todo);
+
+            list.appendChild(text);
+            document.querySelector('ul').appendChild(list);
+        });
+        ipcRenderer.on('todo:clear', () => {
+            document.querySelector('ul').innerHTML = '';
+        });
+    </script>
 </html>
